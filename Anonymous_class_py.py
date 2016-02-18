@@ -7,7 +7,7 @@ def create_anon_class(*args):
 
     return (lambda *y:type.__new__(type,"",(object,),(lambda f:apply(lambda\
     *d:map(lambda e:d[0].update(e) or d[0],d[1:])[0],f) if len(f)>1 else f[0])\
-    (map(lambda b:b if type(b)==dict else{str(b):b},y))))(*args)
+    (map(lambda b:b if type(b)==dict else{str(b):b},y))))(*(args + (kwargs,)))
 
 
-create_anon_class('test','spec',{'getspec':lambda self: print(self.spec)})().getspec()
+create_anon_class('spec',{'getspec':lambda self: print(self.spec)}, test='hello world', gettest=(lambda self: print(self.test)))().gettest()
